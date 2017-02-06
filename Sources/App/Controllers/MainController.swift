@@ -1,8 +1,12 @@
 import Vapor
 import HTTP
 import VaporPostgreSQL
+import Foundation
 
 final class MainController {
+    
+    let googleAPIKey = "AIzaSyCBUZCO2r_WNJzPwJ4-5cEJMgK8_CHzxPU"
+    let googlePlacesBaseURL = "https://maps.googleapis.com/maps/api/place"
     
     var currentDroplet: Droplet!
     
@@ -10,6 +14,7 @@ final class MainController {
         
         currentDroplet = drop
         drop.get("pollingdata", String.self, String.self, handler: getPollingData)
+        drop.get("winner", handler: getTodaysWinner)
         drop.post("vote", String.self, handler: castVote)
     }
     
@@ -17,12 +22,9 @@ final class MainController {
     
     func getPollingData(request: Request, facebookId: String, location: String) throws -> ResponseRepresentable {
         
-        let googleAPIKey = "AIzaSyDNqUbc1RkjMq76jl8R1M1Tb3WM0tqMbiw"
-        let googlePlacesBaseURL = "https://maps.googleapis.com/maps/api/place/nearbysearch"
-        
         drop.client = FoundationClient.self
         
-        let url = googlePlacesBaseURL + "/json?location=\(location)&radius=500&types=food&key=" + googleAPIKey
+        let url = googlePlacesBaseURL + "/nearbysearch/json?location=\(location)&radius=500&types=food&key=" + googleAPIKey
         
         var googlePlacesResponse: JSON?
         
@@ -52,6 +54,26 @@ final class MainController {
         }
     }
     
+    func getPlaceNameForId(placeId: String) -> String? {
+        
+        drop.client = FoundationClient.self
+        
+        let url = googlePlacesBaseURL + "/details/json?placeid=\(placeId)&key=" + googleAPIKey
+        
+        var googlePlacesResponse: JSON?
+        
+        do {
+            googlePlacesResponse = try drop.client.get(url).json
+            
+            return googlePlacesResponse?["result"]?["name"]?.node.string
+            
+        } catch  {
+            // Handle Error
+        }
+        
+        return nil
+    }
+    
     // MARK: Vote
     
     func castVote(request: Request, facebookId: String) throws -> ResponseRepresentable {
@@ -68,5 +90,19 @@ final class MainController {
         return try JSON(node: ["message" : "Vote successfully computed!"])
         
     }
+    
+    // MARK: Winner
+    
+    func getTodaysWinner(request: Request) throws -> ResponseRepresentable {
+        
+    
+        guard let winner = MainInteractor().winnerForToday() else {
+            throw Abort.notFound
+        }
+        
+        return try JSON(node: ["winner" : winner])
+        
+        
+    }    
     
 }

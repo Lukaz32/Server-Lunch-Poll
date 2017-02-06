@@ -17,7 +17,7 @@ final class Winner: Model {
     var placeId: String
     var date: String
     
-    init(userId: Int64, placeId: String) {
+    init(placeId: String) {
         self.id = nil
         self.placeId = placeId
         let dateFormat = DateFormatter()
