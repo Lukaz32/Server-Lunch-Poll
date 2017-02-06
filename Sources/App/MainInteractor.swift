@@ -85,6 +85,9 @@ class MainInteractor {
                 })
                 if dailyVotes.count > 0 { userIsAllowedToVote = false }
 
+            }else {
+                var user = User(name: "", facebookId: fbId)
+                try user.save()
             }
             
             userData["userIsAllowedToVote"] = Node(userIsAllowedToVote)
