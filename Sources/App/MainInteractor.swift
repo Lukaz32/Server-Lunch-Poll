@@ -123,7 +123,9 @@ class MainInteractor {
     
     func computeVotes() {
         
+        print("About to compute votes")
         do {
+            
             
             let todayVotes = try Vote.query().all().filter({ (vote) -> Bool in
                 if Date.date(fromJsonDate: vote.date).isToday() {
@@ -132,6 +134,7 @@ class MainInteractor {
                 return false
             })
             
+            print("Today Votes: \(todayVotes)")
             
             var voteCount = [String:Int]()
             
@@ -143,6 +146,8 @@ class MainInteractor {
                     voteCount[vote.placeId] = 1
                 }
             }
+            
+            print("Vote Count \(voteCount)")
             
             var highestVoted = ("" ,0)
             
@@ -159,7 +164,11 @@ class MainInteractor {
             
             if let dailyWinnersPlaceId = MainInteractor().winnerForToday() {
                 
+                print("daily winner: \(dailyWinnersPlaceId)")
+                
                 if let name = MainController().getPlaceNameForId(placeId: dailyWinnersPlaceId) {
+                    
+                    print("Name for id: \(name)")
                     
                     PushHandler.notificateUserAboutTodaysWinner(winnersName: name)
                 }

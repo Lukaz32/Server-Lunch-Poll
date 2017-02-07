@@ -20,6 +20,8 @@ class PushHandler {
         
         drop.client = FoundationClient.self
         
+        print("About to send notific.")
+        
         do {
             let params = try JSON(node:["app_id": oneSignalAPIKey.makeNode(),
                                         "included_segments" : ["All"].makeNode(),
