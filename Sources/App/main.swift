@@ -15,14 +15,14 @@ controller.addRoutes(drop: drop)
 var lastDateRan: Date?
 
 // Check for daily winners
-Jobs.delay(by: Duration.seconds(5), interval: .seconds(60)) {
+Jobs.delay(by: Duration.seconds(10), interval: .seconds(30)) {
     
     
     let today = Date()
     var todayComponents = Calendar.current.dateComponents([.day,.month,.year], from: today)
     let hour = Calendar.current.component(.hour, from: today)
     
-    if hour == 19 {
+    if hour == 20 {
     
         if let date = lastDateRan, date.isToday() {
             return
