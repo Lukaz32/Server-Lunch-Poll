@@ -152,8 +152,12 @@ class MainInteractor {
                 }
             }
             
-            var todaysWinner = Winner(placeId: highestVoted.0)
-            try todaysWinner.save()
+            if highestVoted.0.characters.count > 0 {
+                var todaysWinner = Winner(placeId: highestVoted.0)
+                try todaysWinner.save()
+            }else {
+                // There's no votes for today
+            }
             
         } catch {
             //

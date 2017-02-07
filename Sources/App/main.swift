@@ -22,7 +22,7 @@ Jobs.delay(by: Duration.seconds(5), interval: .seconds(60)) {
     var todayComponents = Calendar.current.dateComponents([.day,.month,.year], from: today)
     let hour = Calendar.current.component(.hour, from: today)
     
-    if hour == 13 {
+    if hour == 19 {
     
         if let date = lastDateRan, date.isToday() {
             return
