@@ -22,7 +22,7 @@ Jobs.delay(by: Duration.seconds(10), interval: .seconds(30)) {
     var todayComponents = Calendar(identifier: .gregorian).dateComponents([.day,.month,.year], from: today)
     let hour = Calendar(identifier: .gregorian).component(.hour, from: today)
     
-    if hour == 20 {
+    if hour == 13 {
     
         if let date = lastDateRan, date.isToday() {
             return
