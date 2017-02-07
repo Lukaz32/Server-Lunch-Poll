@@ -16,6 +16,7 @@ final class MainController {
         drop.get("pollingdata", String.self, String.self, handler: getPollingData)
         drop.get("winner", handler: getTodaysWinner)
         drop.post("vote", String.self, handler: castVote)
+        drop.get("vote", "compute", handler: computeVotes)
     }
     
     // MARK: Poll Data
@@ -89,6 +90,13 @@ final class MainController {
         
         return try JSON(node: ["message" : "Vote successfully computed!"])
         
+    }
+    
+    func computeVotes(request: Request) throws -> ResponseRepresentable {
+        
+        MainInteractor().computeVotes()
+        
+        return "Done"
     }
     
     // MARK: Winner

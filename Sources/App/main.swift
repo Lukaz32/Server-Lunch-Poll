@@ -19,8 +19,8 @@ Jobs.delay(by: Duration.seconds(10), interval: .seconds(30)) {
     
     
     let today = Date()
-    var todayComponents = Calendar.current.dateComponents([.day,.month,.year], from: today)
-    let hour = Calendar.current.component(.hour, from: today)
+    var todayComponents = Calendar(identifier: .gregorian).dateComponents([.day,.month,.year], from: today)
+    let hour = Calendar(identifier: .gregorian).component(.hour, from: today)
     
     if hour == 20 {
     
@@ -32,15 +32,6 @@ Jobs.delay(by: Duration.seconds(10), interval: .seconds(30)) {
         
         MainInteractor().computeVotes()
         
-        print("Computing votes")
-        
-        if let dailyWinnersPlaceId = MainInteractor().winnerForToday() {
-            
-            if let name = MainController().getPlaceNameForId(placeId: dailyWinnersPlaceId) {
-                
-                PushHandler.notificateUserAboutTodaysWinner(winnersName: name)
-            }
-        }
     }
 }
 
