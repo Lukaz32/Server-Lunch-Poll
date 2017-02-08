@@ -15,18 +15,28 @@ controller.addRoutes(drop: drop)
 var lastDateRan: Date?
 
 // Check for daily winners
-Jobs.delay(by: Duration.seconds(10), interval: .seconds(30)) {
+Jobs.delay(by: Duration.seconds(30), interval: .seconds(30)) {
     
+    print("Running Job")
     
     let today = Date()
+    
+    print(today)
+    
     var todayComponents = Calendar(identifier: .gregorian).dateComponents([.day,.month,.year], from: today)
     let hour = Calendar(identifier: .gregorian).component(.hour, from: today)
     
     if hour == 13 {
     
+        print("It's time!.")
+        
         if let date = lastDateRan, date.isToday() {
+            
+            print("Votes already computed for today.")
             return
         }
+        
+        print("Votes about to be computed")
         
         lastDateRan = Date()
         

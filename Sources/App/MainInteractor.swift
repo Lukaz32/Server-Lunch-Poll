@@ -123,7 +123,7 @@ class MainInteractor {
     
     func computeVotes() {
         
-        print("About to compute votes")
+
         do {
             
             
