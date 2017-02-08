@@ -12,6 +12,13 @@ let drop = Droplet(
 let controller = MainController()
 controller.addRoutes(drop: drop)
 
+
+// Something with Ubuntu is crashing the app on this routine
+// Locally on OSX it works fine.
+// For now winners will have to be computed manually by calling
+// https://calm-plateau-17216.herokuapp.com/vote/compute
+
+/*
 var lastDateRan: Date?
 
 // Check for daily winners
@@ -48,5 +55,6 @@ Jobs.delay(by: Duration.seconds(30), interval: .seconds(30)) {
         
     }
 }
+*/
 
 drop.run()
