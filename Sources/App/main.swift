@@ -18,6 +18,7 @@ var lastDateRan: Date?
 Jobs.delay(by: Duration.seconds(30), interval: .seconds(30)) {
     
     print("Running Job")
+    fflush(stdout)
     
     let today = Date()
     
@@ -29,14 +30,17 @@ Jobs.delay(by: Duration.seconds(30), interval: .seconds(30)) {
     if hour == 13 {
     
         print("It's time!.")
+        fflush(stdout)
         
         if let date = lastDateRan, date.isToday() {
             
             print("Votes already computed for today.")
+            fflush(stdout)
             return
         }
         
         print("Votes about to be computed")
+        fflush(stdout)
         
         lastDateRan = Date()
         

@@ -135,6 +135,7 @@ class MainInteractor {
             })
             
             print("Today Votes: \(todayVotes)")
+            fflush(stdout)
             
             var voteCount = [String:Int]()
             
@@ -148,6 +149,7 @@ class MainInteractor {
             }
             
             print("Vote Count \(voteCount)")
+            fflush(stdout)
             
             var highestVoted = ("" ,0)
             
@@ -165,10 +167,12 @@ class MainInteractor {
             if let dailyWinnersPlaceId = MainInteractor().winnerForToday() {
                 
                 print("daily winner: \(dailyWinnersPlaceId)")
+                fflush(stdout)
                 
                 if let name = MainController().getPlaceNameForId(placeId: dailyWinnersPlaceId) {
                     
                     print("Name for id: \(name)")
+                    fflush(stdout)
                     
                     PushHandler.notificateUserAboutTodaysWinner(winnersName: name)
                 }

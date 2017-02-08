@@ -21,6 +21,7 @@ class PushHandler {
         drop.client = FoundationClient.self
         
         print("About to send notific.")
+        fflush(stdout)
         
         do {
             let params = try JSON(node:["app_id": oneSignalAPIKey.makeNode(),
@@ -28,6 +29,8 @@ class PushHandler {
                                         "contents" :  ["en": "It has been decided. Today's lunch will be at \(winnersName)!"].makeNode()]).makeBytes()
             
             let _ = try drop.client.post(oneSignalURL, headers: ["Content-Type": "application/json","Authorization" : "Basic YzQwOTI4ZGYtYjc1Ni00MmUwLWEzZmMtMzZhYjA2MDM5MGQ2"], body: Body(params))
+            
+            
         
         }catch {
             // Handle Error
